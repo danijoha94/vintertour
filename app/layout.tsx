@@ -13,8 +13,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
+      <body className="flex flex-col min-h-screen">
+        <main className="flex-grow">
+          {children}
+        </main>
+        <footer className="py-4 text-center text-xs text-gray-600 bg-gray-50 border-t border-gray-200">
+          Johansen Web © All right reserved
+        </footer>
       </body>
     </html>
   );

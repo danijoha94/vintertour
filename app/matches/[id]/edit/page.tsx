@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { matchApi } from '@/lib/api/matchApi';
 import { Player, Match } from '@/lib/types/match';
+import Modal from '@/components/Modal';
 
 export default function EditMatchPage() {
   const params = useParams();
@@ -21,6 +22,8 @@ export default function EditMatchPage() {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [matchId, setMatchId] = useState<number>(0);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   useEffect(() => {
     loadMatch();
@@ -89,7 +92,8 @@ export default function EditMatchPage() {
       router.push('/');
     } catch (error) {
       console.error('Failed to update match:', error);
-      alert('Failed to update match. Please try again.');
+      setModalMessage('Failed to update match. Please try again.');
+      setModalOpen(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -120,7 +124,7 @@ export default function EditMatchPage() {
               value={matchTitle}
               onChange={(e) => setMatchTitle(e.target.value)}
               required
-              className="w-full text-sm sm:text-base px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
+              className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
               placeholder="e.g., Championship Match"
             />
             {originalDate && (
@@ -142,7 +146,7 @@ export default function EditMatchPage() {
                 value={team1Title}
                 onChange={(e) => setTeam1Title(e.target.value)}
                 required
-                className="w-full text-sm sm:text-base px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
                 placeholder="e.g., Team Alpha"
               />
             </div>
@@ -158,7 +162,7 @@ export default function EditMatchPage() {
                   value={team1Player1.name}
                   onChange={(e) => setTeam1Player1({ ...team1Player1, name: e.target.value })}
                   required
-                  className="w-full text-sm sm:text-base px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
+                  className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
                   placeholder="Player name"
                 />
               </div>
@@ -173,7 +177,7 @@ export default function EditMatchPage() {
                   value={team1Player2.name}
                   onChange={(e) => setTeam1Player2({ ...team1Player2, name: e.target.value })}
                   required
-                  className="w-full text-sm sm:text-base px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
+                  className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
                   placeholder="Player name"
                 />
               </div>
@@ -194,7 +198,7 @@ export default function EditMatchPage() {
                 value={team2Title}
                 onChange={(e) => setTeam2Title(e.target.value)}
                 required
-                className="w-full text-sm sm:text-base px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
                 placeholder="e.g., Team Beta"
               />
             </div>
@@ -210,7 +214,7 @@ export default function EditMatchPage() {
                   value={team2Player1.name}
                   onChange={(e) => setTeam2Player1({ ...team2Player1, name: e.target.value })}
                   required
-                  className="w-full text-sm sm:text-base px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
+                  className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
                   placeholder="Player name"
                 />
               </div>
@@ -225,7 +229,7 @@ export default function EditMatchPage() {
                   value={team2Player2.name}
                   onChange={(e) => setTeam2Player2({ ...team2Player2, name: e.target.value })}
                   required
-                  className="w-full text-sm sm:text-base px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
+                  className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
                   placeholder="Player name"
                 />
               </div>
@@ -252,6 +256,12 @@ export default function EditMatchPage() {
           </div>
         </form>
       </div>
+
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        message={modalMessage}
+      />
     </div>
   );
 }

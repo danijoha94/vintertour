@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { matchApi } from '@/lib/api/matchApi';
 import { Match } from '@/lib/types/match';
+import Modal from '@/components/Modal';
 
 export default function MatchViewPage() {
   const params = useParams();
@@ -12,6 +13,8 @@ export default function MatchViewPage() {
   const [loading, setLoading] = useState(true);
   const [selectedHole, setSelectedHole] = useState<number | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<'team1' | 'team2' | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   useEffect(() => {
     loadMatch();
@@ -101,7 +104,8 @@ export default function MatchViewPage() {
     if (!match) return;
 
     if (!validateAllHoles()) {
-      alert('Alle hull må ha en valgt spiller for begge lag før du kan sende inn.');
+      setModalMessage('Alle hull må ha en valgt spiller for begge lag før du kan sende inn.');
+      setModalOpen(true);
       return;
     }
 
@@ -148,13 +152,51 @@ export default function MatchViewPage() {
 
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 sm:mb-8 text-center break-words px-2">{match.title}</h1>
 
-        <div className="mb-4 sm:mb-6 flex justify-center">
-          <button
-            onClick={handleSend}
-            className="bg-green-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors text-sm sm:text-base"
-          >
-            Send inn
-          </button>
+        {/* Player Assignment Counter */}
+        <div className="mb-6 bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="grid grid-cols-2 gap-0">
+            {/* Team 1 Players */}
+            <div className="border-r border-gray-300">
+              <div className="bg-gray-100 py-2 px-4 border-b border-gray-300">
+                <h3 className="font-semibold text-sm sm:text-base text-center">{match.team1.title}</h3>
+              </div>
+              <div className="p-3 sm:p-4 space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs sm:text-sm">{match.team1.player1.name}</span>
+                  <span className="bg-[#275319] text-white px-2 py-1 rounded text-xs sm:text-sm font-medium">
+                    {match.holes.filter(h => h.team1_player === match.team1.player1.id).length}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs sm:text-sm">{match.team1.player2.name}</span>
+                  <span className="bg-[#275319] text-white px-2 py-1 rounded text-xs sm:text-sm font-medium">
+                    {match.holes.filter(h => h.team1_player === match.team1.player2.id).length}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Team 2 Players */}
+            <div>
+              <div className="bg-gray-100 py-2 px-4 border-b border-gray-300">
+                <h3 className="font-semibold text-sm sm:text-base text-center">{match.team2.title}</h3>
+              </div>
+              <div className="p-3 sm:p-4 space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs sm:text-sm">{match.team2.player1.name}</span>
+                  <span className="bg-[#ff7229] text-white px-2 py-1 rounded text-xs sm:text-sm font-medium">
+                    {match.holes.filter(h => h.team2_player === match.team2.player1.id).length}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs sm:text-sm">{match.team2.player2.name}</span>
+                  <span className="bg-[#ff7229] text-white px-2 py-1 rounded text-xs sm:text-sm font-medium">
+                    {match.holes.filter(h => h.team2_player === match.team2.player2.id).length}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="bg-white rounded-lg shadow-lg overflow-x-auto">
@@ -285,6 +327,16 @@ export default function MatchViewPage() {
             </tbody>
           </table>
         </div>
+
+        {/* Submit Button */}
+        <div className="mt-6 flex justify-center">
+          <button
+            onClick={handleSend}
+            className="bg-green-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors text-sm sm:text-base"
+          >
+            Send inn
+          </button>
+        </div>
       </div>
 
       {/* Click outside to close remove option */}
@@ -294,6 +346,12 @@ export default function MatchViewPage() {
           onClick={closeRemoveOption}
         />
       )}
+
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        message={modalMessage}
+      />
     </div>
   );
 }

@@ -5,11 +5,14 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { matchApi } from '@/lib/api/matchApi';
 import { Match } from '@/lib/types/match';
+import ConfirmModal from '@/components/ConfirmModal';
 
 export default function Home() {
   const router = useRouter();
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [matchToDelete, setMatchToDelete] = useState<number | null>(null);
 
   useEffect(() => {
     loadMatches();
@@ -27,14 +30,27 @@ export default function Home() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this match?')) return;
+    setMatchToDelete(id);
+    setConfirmModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (matchToDelete === null) return;
     
     try {
-      await matchApi.delete(id);
+      await matchApi.delete(matchToDelete);
       await loadMatches();
     } catch (error) {
       console.error('Failed to delete match:', error);
+    } finally {
+      setConfirmModalOpen(false);
+      setMatchToDelete(null);
     }
+  };
+
+  const cancelDelete = () => {
+    setConfirmModalOpen(false);
+    setMatchToDelete(null);
   };
 
   return (
@@ -107,6 +123,15 @@ export default function Home() {
           </div>
         )}
       </main>
+
+      <ConfirmModal
+        isOpen={confirmModalOpen}
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+        message="Er du sikker på at du vil slette denne kampen?"
+        confirmText="Slett"
+        cancelText="Avbryt"
+      />
     </>
   );
 }
