@@ -62,8 +62,16 @@ export default function Home() {
       </header>
       
       <main className="max-w-6xl mx-auto p-3 sm:p-6">
+        <div className="flex justify-center py-6 sm:py-8">
+          <Link
+            href="https://tm-short.me/YNpaFQb"
+            className="bg-[#275319] text-white px-4 sm:px-6 py-2 rounded-lg font-medium hover:bg-[#1f4215] active:bg-[#163210] transition-colors text-sm sm:text-base text-center"
+          >
+            Se livescore
+          </Link>
+        </div>
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-          <h2 className="text-xl sm:text-2xl font-semibold">Registrer utslag</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold">Registrer utslag og poeng</h2>
           <Link
             href="/matches/new"
             className="bg-[#275319] text-white px-4 sm:px-6 py-2 rounded-lg font-medium hover:bg-[#1f4215] active:bg-[#163210] transition-colors text-sm sm:text-base w-full sm:w-auto text-center"
