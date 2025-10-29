@@ -7,6 +7,7 @@ export interface Team {
   title: string;
   player1: Player;
   player2: Player;
+  score?: number;
 }
 
 export interface Hole {

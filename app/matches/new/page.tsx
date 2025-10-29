@@ -44,12 +44,14 @@ export default function NewMatchPage() {
         team1: {
           title: team1Title,
           player1: team1Player1,
-          player2: team1Player2
+          player2: team1Player2,
+          score: 0
         },
         team2: {
           title: team2Title,
           player1: team2Player1,
-          player2: team2Player2
+          player2: team2Player2,
+          score: 0
         },
         holes
       });

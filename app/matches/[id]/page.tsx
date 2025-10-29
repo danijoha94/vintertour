@@ -77,6 +77,24 @@ export default function MatchViewPage() {
     setSelectedTeam(null);
   };
 
+  const handleScoreChange = async (team: 'team1' | 'team2', score: number) => {
+    if (!match) return;
+
+    const updatedMatch = {
+      ...match,
+      [team]: {
+        ...match[team],
+        score
+      }
+    };
+
+    await matchApi.update(match.id, {
+      team1: updatedMatch.team1,
+      team2: updatedMatch.team2
+    });
+    setMatch(updatedMatch);
+  };
+
   const getPlayerName = (team: 'team1' | 'team2', playerId: number): string => {
     if (!match || playerId === 0) return '';
     const teamObj = team === 'team1' ? match.team1 : match.team2;
@@ -113,6 +131,9 @@ export default function MatchViewPage() {
     
     let body = `Kamp: ${match.title}\n`;
     body += `${match.team1.title} vs ${match.team2.title}\n\n`;
+    body += `Resultat:\n`;
+    body += `${match.team1.title}: ${match.team1.score || 0}\n`;
+    body += `${match.team2.title}: ${match.team2.score || 0}\n\n`;
     body += `Hull | ${match.team1.title} | ${match.team2.title}\n`;
     body += `${'─'.repeat(50)}\n`;
     
@@ -324,6 +345,47 @@ export default function MatchViewPage() {
                   </tr>
                 );
               })}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Score Table */}
+        <div className="bg-white rounded-lg shadow-lg overflow-x-auto mt-6">
+          <h2 className="text-xl sm:text-2xl md:text-3xl mb-6 sm:mb-8 text-center break-words px-2">Poeng</h2>
+          <table className="w-full min-w-[300px] table-fixed">
+            <colgroup>
+              <col />
+              <col />
+            </colgroup>
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="py-2 sm:py-4 px-2 sm:px-4 text-center font-semibold border-r border-gray-300 text-xs sm:text-sm md:text-base">
+                  {match.team1.title}
+                </th>
+                <th className="py-2 sm:py-4 px-2 sm:px-4 text-center font-semibold text-xs sm:text-sm md:text-base">
+                  {match.team2.title}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-gray-200">
+                <td className="py-2 sm:py-3 px-2 sm:px-4 border-r border-gray-300">
+                  <input
+                    type="number"
+                    value={match.team1.score || 0}
+                    onChange={(e) => handleScoreChange('team1', parseInt(e.target.value) || 0)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent text-center text-sm sm:text-base"
+                  />
+                </td>
+                <td className="py-2 sm:py-3 px-2 sm:px-4">
+                  <input
+                    type="number"
+                    value={match.team2.score || 0}
+                    onChange={(e) => handleScoreChange('team2', parseInt(e.target.value) || 0)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff7229] focus:border-transparent text-center text-sm sm:text-base"
+                  />
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
