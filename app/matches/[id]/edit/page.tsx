@@ -102,7 +102,7 @@ export default function EditMatchPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-600">Loading match...</p>
+        <p className="text-gray-600">Laster kamp...</p>
       </div>
     );
   }
@@ -110,13 +110,13 @@ export default function EditMatchPage() {
   return (
     <div className="min-h-screen p-3 sm:p-6 md:p-8">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Edit Match</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Rediger kamp</h1>
         
         <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
           {/* Match Title */}
           <div>
             <label htmlFor="matchTitle" className="block text-sm font-medium mb-2">
-              Match Name
+              Golfbane
             </label>
             <input
               type="text"
@@ -125,7 +125,7 @@ export default function EditMatchPage() {
               onChange={(e) => setMatchTitle(e.target.value)}
               required
               className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
-              placeholder="e.g., Championship Match"
+              placeholder="e.g., Lofoten links"
             />
             {originalDate && (
               <p className="text-sm text-gray-500 mt-1">Date: {originalDate}</p>
@@ -134,11 +134,11 @@ export default function EditMatchPage() {
 
           {/* Team 1 */}
           <div className="border border-gray-200 rounded-lg p-4 sm:p-6 space-y-4">
-            <h2 className="text-lg sm:text-xl font-semibold">Team 1</h2>
+            <h2 className="text-lg sm:text-xl font-semibold">Lag 1</h2>
             
             <div>
               <label htmlFor="team1Title" className="block text-sm font-medium mb-2">
-                Team Name
+                Lagnavn
               </label>
               <input
                 type="text"
@@ -154,7 +154,7 @@ export default function EditMatchPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="team1Player1" className="block text-sm font-medium mb-2">
-                  Player 1
+                  Spiller 1
                 </label>
                 <input
                   type="text"
@@ -163,13 +163,13 @@ export default function EditMatchPage() {
                   onChange={(e) => setTeam1Player1({ ...team1Player1, name: e.target.value })}
                   required
                   className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
-                  placeholder="Player name"
+                  placeholder="Navn"
                 />
               </div>
 
               <div>
                 <label htmlFor="team1Player2" className="block text-sm font-medium mb-2">
-                  Player 2
+                  Spiller 2
                 </label>
                 <input
                   type="text"
@@ -178,7 +178,7 @@ export default function EditMatchPage() {
                   onChange={(e) => setTeam1Player2({ ...team1Player2, name: e.target.value })}
                   required
                   className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
-                  placeholder="Player name"
+                  placeholder="Navn"
                 />
               </div>
             </div>
@@ -186,11 +186,11 @@ export default function EditMatchPage() {
 
           {/* Team 2 */}
           <div className="border border-gray-200 rounded-lg p-4 sm:p-6 space-y-4">
-            <h2 className="text-lg sm:text-xl font-semibold">Team 2</h2>
+            <h2 className="text-lg sm:text-xl font-semibold">Lag 2</h2>
             
             <div>
               <label htmlFor="team2Title" className="block text-sm font-medium mb-2">
-                Team Name
+                Lagnavn
               </label>
               <input
                 type="text"
@@ -206,7 +206,7 @@ export default function EditMatchPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="team2Player1" className="block text-sm font-medium mb-2">
-                  Player 1
+                  Spiller 1
                 </label>
                 <input
                   type="text"
@@ -215,13 +215,13 @@ export default function EditMatchPage() {
                   onChange={(e) => setTeam2Player1({ ...team2Player1, name: e.target.value })}
                   required
                   className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
-                  placeholder="Player name"
+                  placeholder="Navn"
                 />
               </div>
 
               <div>
                 <label htmlFor="team2Player2" className="block text-sm font-medium mb-2">
-                  Player 2
+                  Spiller 2
                 </label>
                 <input
                   type="text"
@@ -230,7 +230,7 @@ export default function EditMatchPage() {
                   onChange={(e) => setTeam2Player2({ ...team2Player2, name: e.target.value })}
                   required
                   className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#275319] focus:border-transparent"
-                  placeholder="Player name"
+                  placeholder="Navn"
                 />
               </div>
             </div>
@@ -243,7 +243,7 @@ export default function EditMatchPage() {
               disabled={isSubmitting}
               className="flex-1 bg-[#275319] text-white py-3 px-4 sm:px-6 rounded-lg font-medium hover:bg-[#1f4215] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
             >
-              {isSubmitting ? 'Saving...' : 'Save Changes'}
+              {isSubmitting ? 'Lagrer...' : 'Lagre endringer'}
             </button>
             
             <button
@@ -251,7 +251,7 @@ export default function EditMatchPage() {
               onClick={() => router.push('/')}
               className="px-6 py-3 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors"
             >
-              Cancel
+              Avbryt
             </button>
           </div>
         </form>
