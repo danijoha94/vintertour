@@ -83,7 +83,7 @@ export default function Home() {
             {matches.map((match) => (
               <div 
                 key={match.id} 
-                className="border border-gray-200 rounded-lg hover:shadow-lg transition-shadow relative cursor-pointer"
+                className="border border-gray-200 rounded-lg hover:shadow-lg active:bg-gray-50 transition-shadow relative cursor-pointer"
                 onClick={() => router.push(`/matches/${match.id}`)}
               >
                 <div className="p-3 sm:p-6">
@@ -106,7 +106,7 @@ export default function Home() {
                     }}
                     className="text-[#275319] hover:text-[#1a3310] active:text-[#0f1f0a] text-xs sm:text-sm font-medium bg-gray-50 hover:bg-gray-100 active:bg-gray-200 px-3 py-1.5 rounded border border-gray-200"
                   >
-                    Rediger
+                    Endre oppsett
                   </button>
                   <button
                     onClick={(e) => {

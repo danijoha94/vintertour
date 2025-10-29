@@ -144,7 +144,7 @@ export default function MatchViewPage() {
         <div className="mb-4 sm:mb-6 flex items-center justify-between">
           <button
             onClick={() => router.push('/')}
-            className="text-[#275319] hover:text-[#1a3310] active:text-[#0f1f0a] font-medium text-sm sm:text-base"
+            className="text-[#275319] hover:text-[#1a3310] active:text-[#0f1f0a] active:bg-gray-100 font-medium text-sm sm:text-base px-3 py-1 rounded"
           >
             ← Tilbake
           </button>
