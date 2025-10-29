@@ -144,7 +144,7 @@ export default function MatchViewPage() {
         <div className="mb-4 sm:mb-6 flex items-center justify-between">
           <button
             onClick={() => router.push('/')}
-            className="text-[#275319] hover:text-[#1a3310] font-medium text-sm sm:text-base"
+            className="text-[#275319] hover:text-[#1a3310] active:text-[#0f1f0a] font-medium text-sm sm:text-base"
           >
             ← Tilbake
           </button>
@@ -238,13 +238,13 @@ export default function MatchViewPage() {
                         <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 justify-center">
                           <button
                             onClick={() => handlePlayerSelect(hole.number, 'team1', match.team1.player1.id)}
-                            className="px-2 sm:px-3 py-1 sm:py-2 bg-[#d4e5cf] text-[#275319] rounded hover:bg-[#c0d9b8] transition-colors text-xs sm:text-sm whitespace-nowrap"
+                            className="px-2 sm:px-3 py-1 sm:py-2 bg-[#d4e5cf] text-[#275319] rounded hover:bg-[#c0d9b8] active:bg-[#b0cda8] transition-colors text-xs sm:text-sm whitespace-nowrap"
                           >
                             {match.team1.player1.name}
                           </button>
                           <button
                             onClick={() => handlePlayerSelect(hole.number, 'team1', match.team1.player2.id)}
-                            className="px-2 sm:px-3 py-1 sm:py-2 bg-[#d4e5cf] text-[#275319] rounded hover:bg-[#c0d9b8] transition-colors text-xs sm:text-sm whitespace-nowrap"
+                            className="px-2 sm:px-3 py-1 sm:py-2 bg-[#d4e5cf] text-[#275319] rounded hover:bg-[#c0d9b8] active:bg-[#b0cda8] transition-colors text-xs sm:text-sm whitespace-nowrap"
                           >
                             {match.team1.player2.name}
                           </button>
@@ -253,7 +253,7 @@ export default function MatchViewPage() {
                         <div className="flex justify-center relative">
                           <button
                             onClick={() => showRemoveOption(hole.number, 'team1')}
-                            className="px-2 sm:px-4 py-1 sm:py-2 bg-[#275319] text-white rounded hover:bg-[#1f4215] transition-colors font-medium text-xs sm:text-sm md:text-base whitespace-nowrap"
+                            className="px-2 sm:px-4 py-1 sm:py-2 bg-[#275319] text-white rounded hover:bg-[#1f4215] active:bg-[#163210] transition-colors font-medium text-xs sm:text-sm md:text-base whitespace-nowrap"
                           >
                             {team1PlayerName}
                           </button>
@@ -261,13 +261,13 @@ export default function MatchViewPage() {
                             <div className="absolute top-full mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 min-w-max">
                               <button
                                 onClick={() => handlePlayerRemove(hole.number, 'team1')}
-                                className="px-3 sm:px-4 py-2 text-red-600 hover:bg-red-50 whitespace-nowrap text-xs sm:text-sm block w-full text-left"
+                                className="px-3 sm:px-4 py-2 text-red-600 hover:bg-red-50 active:bg-red-100 whitespace-nowrap text-xs sm:text-sm block w-full text-left"
                               >
                                 Fjern spiller
                               </button>
                               <button
                                 onClick={closeRemoveOption}
-                                className="px-3 sm:px-4 py-2 text-gray-600 hover:bg-gray-50 border-t whitespace-nowrap block w-full text-left text-xs sm:text-sm"
+                                className="px-3 sm:px-4 py-2 text-gray-600 hover:bg-gray-50 active:bg-gray-100 border-t whitespace-nowrap block w-full text-left text-xs sm:text-sm"
                               >
                                 Avbryt
                               </button>
@@ -283,13 +283,13 @@ export default function MatchViewPage() {
                         <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 justify-center">
                           <button
                             onClick={() => handlePlayerSelect(hole.number, 'team2', match.team2.player1.id)}
-                            className="px-2 sm:px-3 py-1 sm:py-2 bg-[#ffe4d6] text-[#ff7229] rounded hover:bg-[#ffd4bf] transition-colors text-xs sm:text-sm whitespace-nowrap"
+                            className="px-2 sm:px-3 py-1 sm:py-2 bg-[#ffe4d6] text-[#ff7229] rounded hover:bg-[#ffd4bf] active:bg-[#ffc4a8] transition-colors text-xs sm:text-sm whitespace-nowrap"
                           >
                             {match.team2.player1.name}
                           </button>
                           <button
                             onClick={() => handlePlayerSelect(hole.number, 'team2', match.team2.player2.id)}
-                            className="px-2 sm:px-3 py-1 sm:py-2 bg-[#ffe4d6] text-[#ff7229] rounded hover:bg-[#ffd4bf] transition-colors text-xs sm:text-sm whitespace-nowrap"
+                            className="px-2 sm:px-3 py-1 sm:py-2 bg-[#ffe4d6] text-[#ff7229] rounded hover:bg-[#ffd4bf] active:bg-[#ffc4a8] transition-colors text-xs sm:text-sm whitespace-nowrap"
                           >
                             {match.team2.player2.name}
                           </button>
@@ -298,7 +298,7 @@ export default function MatchViewPage() {
                         <div className="flex justify-center relative">
                           <button
                             onClick={() => showRemoveOption(hole.number, 'team2')}
-                            className="px-2 sm:px-4 py-1 sm:py-2 bg-[#ff7229] text-white rounded hover:bg-[#e66424] transition-colors font-medium text-xs sm:text-sm md:text-base whitespace-nowrap"
+                            className="px-2 sm:px-4 py-1 sm:py-2 bg-[#ff7229] text-white rounded hover:bg-[#e66424] active:bg-[#cc5620] transition-colors font-medium text-xs sm:text-sm md:text-base whitespace-nowrap"
                           >
                             {team2PlayerName}
                           </button>
@@ -306,13 +306,13 @@ export default function MatchViewPage() {
                             <div className="absolute top-full mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 min-w-max">
                               <button
                                 onClick={() => handlePlayerRemove(hole.number, 'team2')}
-                                className="px-3 sm:px-4 py-2 text-red-600 hover:bg-red-50 whitespace-nowrap text-xs sm:text-sm block w-full text-left"
+                                className="px-3 sm:px-4 py-2 text-red-600 hover:bg-red-50 active:bg-red-100 whitespace-nowrap text-xs sm:text-sm block w-full text-left"
                               >
                                 Fjern spiller
                               </button>
                               <button
                                 onClick={closeRemoveOption}
-                                className="px-3 sm:px-4 py-2 text-gray-600 hover:bg-gray-50 border-t whitespace-nowrap block w-full text-left text-xs sm:text-sm"
+                                className="px-3 sm:px-4 py-2 text-gray-600 hover:bg-gray-50 active:bg-gray-100 border-t whitespace-nowrap block w-full text-left text-xs sm:text-sm"
                               >
                                 Avbryt
                               </button>
@@ -332,7 +332,7 @@ export default function MatchViewPage() {
         <div className="mt-6 flex justify-center">
           <button
             onClick={handleSend}
-            className="bg-green-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors text-sm sm:text-base"
+            className="bg-green-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold hover:bg-green-700 active:bg-green-800 transition-colors text-sm sm:text-base"
           >
             Send inn
           </button>

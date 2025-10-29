@@ -66,7 +66,7 @@ export default function Home() {
           <h2 className="text-xl sm:text-2xl font-semibold">Registrer utslag</h2>
           <Link
             href="/matches/new"
-            className="bg-[#275319] text-white px-4 sm:px-6 py-2 rounded-lg font-medium hover:bg-[#1f4215] transition-colors text-sm sm:text-base w-full sm:w-auto text-center"
+            className="bg-[#275319] text-white px-4 sm:px-6 py-2 rounded-lg font-medium hover:bg-[#1f4215] active:bg-[#163210] transition-colors text-sm sm:text-base w-full sm:w-auto text-center"
           >
             Ny kamp +
           </Link>
@@ -104,7 +104,7 @@ export default function Home() {
                       e.stopPropagation();
                       router.push(`/matches/${match.id}/edit`);
                     }}
-                    className="text-[#275319] hover:text-[#1a3310] text-xs sm:text-sm font-medium bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded border border-gray-200"
+                    className="text-[#275319] hover:text-[#1a3310] active:text-[#0f1f0a] text-xs sm:text-sm font-medium bg-gray-50 hover:bg-gray-100 active:bg-gray-200 px-3 py-1.5 rounded border border-gray-200"
                   >
                     Rediger
                   </button>
@@ -113,7 +113,7 @@ export default function Home() {
                       e.stopPropagation();
                       handleDelete(match.id);
                     }}
-                    className="text-red-600 hover:text-red-800 text-xs sm:text-sm font-medium bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded border border-gray-200"
+                    className="text-red-600 hover:text-red-800 active:text-red-900 text-xs sm:text-sm font-medium bg-gray-50 hover:bg-gray-100 active:bg-gray-200 px-3 py-1.5 rounded border border-gray-200"
                   >
                     Slett
                   </button>

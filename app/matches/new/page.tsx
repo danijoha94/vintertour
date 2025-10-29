@@ -195,7 +195,7 @@ export default function NewMatchPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 bg-[#275319] text-white py-3 px-4 sm:px-6 rounded-lg font-medium hover:bg-[#1f4215] disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400 transition-colors"
+              className="flex-1 bg-[#275319] text-white py-3 px-4 sm:px-6 rounded-lg font-medium hover:bg-[#1f4215] active:bg-[#163210] disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400 transition-colors"
             >
               {isSubmitting ? 'Lagrer...' : 'Opprett kamp'}
             </button>
@@ -203,7 +203,7 @@ export default function NewMatchPage() {
             <button
               type="button"
               onClick={() => router.push('/')}
-              className="px-6 py-3 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+              className="px-6 py-3 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 active:bg-gray-100 transition-colors"
             >
               Avbryt
             </button>
