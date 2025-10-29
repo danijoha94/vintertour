@@ -118,33 +118,96 @@ export default function MatchViewPage() {
     return match.holes.every(hole => hole.team1_player !== 0 && hole.team2_player !== 0);
   };
 
-  const handleSend = () => {
-    if (!match) return;
+  const generatePDF = async () => {
+    if (!match) return null;
 
     if (!validateAllHoles()) {
-      setModalMessage('Alle hull må ha en valgt spiller for begge lag før du kan sende inn.');
+      setModalMessage('Alle hull må ha en valgt spiller for begge lag før du kan dele.');
       setModalOpen(true);
-      return;
+      return null;
     }
 
-    const subject = `${match.title}, ${match.team1.title} vs ${match.team2.title}`;
+    const { jsPDF } = await import('jspdf');
+    const doc = new jsPDF();
     
-    let body = `Kamp: ${match.title}\n`;
-    body += `${match.team1.title} vs ${match.team2.title}\n\n`;
-    body += `Resultat:\n`;
-    body += `${match.team1.title}: ${match.team1.score || 0}\n`;
-    body += `${match.team2.title}: ${match.team2.score || 0}\n\n`;
-    body += `Hull | ${match.team1.title} | ${match.team2.title}\n`;
-    body += `${'─'.repeat(50)}\n`;
+    // Title
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text(match.title, 105, 20, { align: 'center' });
     
+    // Teams
+    doc.setFontSize(14);
+    doc.text(`${match.team1.title} vs ${match.team2.title}`, 105, 30, { align: 'center' });
+    
+    // Score section
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Resultat:', 20, 45);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${match.team1.title}: ${match.team1.score || 0}`, 20, 52);
+    doc.text(`${match.team2.title}: ${match.team2.score || 0}`, 20, 59);
+    
+    // Holes table header
+    doc.setFont('helvetica', 'bold');
+    doc.text('Hull', 20, 75);
+    doc.text(match.team1.title, 50, 75);
+    doc.text(match.team2.title, 120, 75);
+    doc.line(20, 77, 190, 77);
+    
+    // Holes data
+    doc.setFont('helvetica', 'normal');
+    let yPos = 85;
     match.holes.forEach(hole => {
       const team1Player = getPlayerName('team1', hole.team1_player);
       const team2Player = getPlayerName('team2', hole.team2_player);
-      body += `${hole.number.toString().padStart(2, ' ')}   | ${team1Player.padEnd(20)} | ${team2Player}\n`;
+      
+      doc.text(hole.number.toString(), 20, yPos);
+      doc.text(team1Player, 50, yPos);
+      doc.text(team2Player, 120, yPos);
+      
+      yPos += 7;
+      
+      // Add new page if needed
+      if (yPos > 270) {
+        doc.addPage();
+        yPos = 20;
+      }
     });
+    
+    return doc;
+  };
 
-    const mailtoLink = `mailto:daniel@johansenweb.no?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoLink;
+  const handleShare = async () => {
+    const doc = await generatePDF();
+    if (!doc) return;
+
+    const pdfBlob = doc.output('blob');
+    const fileName = `${match?.title.replace(/[^a-z0-9]/gi, '_')}.pdf`;
+    
+    if (navigator.share && navigator.canShare) {
+      const file = new File([pdfBlob], fileName, { type: 'application/pdf' });
+      
+      if (navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: match?.title,
+          });
+        } catch (error) {
+          if ((error as Error).name !== 'AbortError') {
+            console.error('Error sharing:', error);
+            // Fallback to download
+            doc.save(fileName);
+          }
+        }
+      } else {
+        // Fallback to download
+        doc.save(fileName);
+      }
+    } else {
+      // Fallback to download
+      doc.save(fileName);
+    }
   };
 
   if (loading) {
@@ -390,13 +453,16 @@ export default function MatchViewPage() {
           </table>
         </div>
 
-        {/* Submit Button */}
+        {/* Share Button */}
         <div className="mt-6 flex justify-center">
           <button
-            onClick={handleSend}
-            className="bg-green-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold hover:bg-green-700 active:bg-green-800 transition-colors text-sm sm:text-base"
+            onClick={handleShare}
+            className="bg-green-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold hover:bg-green-700 active:bg-green-800 transition-colors text-sm sm:text-base flex items-center gap-2"
           >
-            Send inn
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
+            </svg>
+            Del
           </button>
         </div>
       </div>
